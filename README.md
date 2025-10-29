@@ -19,8 +19,8 @@ The key contribution is demonstrating how quantum-derived features can enhance c
 ### LUPI (Quantum-Enhanced Classical Learning)
 - **Complete SVM+ Implementation**: Binary and multiclass LUPI algorithms from scratch
 - **Interactive Notebooks**: Step-by-step tutorials for data preparation, training, and evaluation
-- **Quantum Privileged Features**: Uses quantum order parameters available only during training
-- **Benchmark Demonstrations**: Synthetic datasets showing LUPI advantages
+- **Quantum Privileged Features**: Uses Hamiltonian order parameters available only during training
+- **Benchmark Demonstrations**: Chain of Rydberg atoms phases datasets showing LUPI advantages
 - **Quantitative Results**: ~10% accuracy improvement over standard SVM on quantum phase detection
 
 ### Transformer Models

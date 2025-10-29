@@ -6,3 +6,8 @@ To run the transformer:
 2. ./submit_all_datasets(_bd).sh
 3. ./submit_accuracy_jobs(_bd).sh
 4. python3 collect_accuracy_results(_bd).py
+
+
+To check the progress, do:
+
+squeue -u user_name

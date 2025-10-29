@@ -40,6 +40,21 @@ This repository contains the implementation code for the research article:
 
 **"Learning Under Privileged Information with Quantum Features"**
 
+### Organization
+
+The project is organized into two main components:
+
+1. **`rydberg_lupi/` folder**: Contains all LUPI (SVM+) experiments
+   - Jupyter notebooks for interactive exploration
+   - Python modules for SVM+ algorithms
+   - Experimental results (`.pkl` files) from various runs
+   - All quantum-enhanced classical learning code in one place
+
+2. **Root directory**: Transformer-based generative models and cluster computing scripts
+   - Transformer training and evaluation
+   - Automated workflows for HPC clusters
+   - Comparative analysis tools
+
 ### Abstract Summary
 
 Quantum machine learning (QML) has been proposed as a promising application of quantum computers. However, practical deployment faces significant hardware limitations. This work explores an alternative approach: using quantum devices as feature extractors to enhance classical learning algorithms rather than training directly on quantum computers.
@@ -58,10 +73,35 @@ Quantum machine learning (QML) has been proposed as a promising application of q
 
 ```
 generative-quantum-states-main/
-├── LUPI Notebooks (Quantum-Enhanced Classical Learning)
-│   ├── Rydberg_data.ipynb              # Data preparation for LUPI experiments
-│   ├── SVMplus_Rydberg.ipynb           # SVM+ implementation & experiments
-│   └── SVM__Rydberg.ipynb              # Standard SVM baseline comparison
+├── rydberg_lupi/                        # LUPI Experiments (Quantum-Enhanced Classical Learning)
+│   ├── Notebooks
+│   │   ├── Rydberg_data.ipynb          # Data preparation for LUPI experiments
+│   │   ├── Rydberg_data (Copy).ipynb   # Backup/alternative version
+│   │   ├── SVMplus_Rydberg.ipynb       # SVM+ implementation & experiments
+│   │   ├── SVM+_Rydberg.ipynb          # Alternative SVM+ experiments
+│   │   ├── SVM__Rydberg.ipynb          # Standard SVM baseline comparison
+│   │   ├── SVMs.ipynb                  # Additional SVM comparisons
+│   │   └── Untitled-1.ipynb            # Scratch/experimental notebook
+│   │
+│   ├── Python Modules
+│   │   ├── SVMplus.py                  # Standalone SVM+ implementation
+│   │   ├── SVMdeltatplus.py            # Delta variant of SVM+
+│   │   └── constants.py                # Configuration constants
+│   │
+│   └── Results (Experimental Data)
+│       ├── exp_res_1.pkl               # Experiment results set 1
+│       ├── exp_res_2.pkl               # Experiment results set 2
+│       ├── exp_res_3.pkl               # Experiment results set 3
+│       ├── exp_res_bd.pkl              # Boundary sampling results
+│       ├── exp_res_bd_1.pkl            # Boundary results set 1
+│       ├── exp_res_bd_2.pkl            # Boundary results set 2
+│       ├── exp_res_bd_3.pkl            # Boundary results set 3
+│       ├── exp_res_bdn_big_1.pkl       # Large-scale boundary results
+│       ├── exp_res_bdn_big_2.pkl
+│       ├── exp_res_bdn_big_3.pkl
+│       ├── exp_res_big_1.pkl           # Large-scale uniform results
+│       ├── exp_res_big_2.pkl
+│       └── exp_res_big_3.pkl
 │
 ├── src/                                 # Core source code
 │   ├── models/                          # Model architectures (MLP, Transformer)
@@ -76,7 +116,7 @@ generative-quantum-states-main/
 │   ├── Tutorial-Rydberg-1D_Cluster.py  # Batch training script
 │   └── Tutorial-Rydberg-1D_Cluster_Multi.py
 │
-├── Data Generation & Evaluation
+├── Data Generation & Evaluation (Transformers)
 │   ├── generate_multiple_datasets.py    # Uniform sampling
 │   ├── generate_multiple_datasets_bd.py # Boundary sampling
 │   ├── Compute_Accuracy_Cluster.py      # Accuracy evaluation
@@ -84,8 +124,7 @@ generative-quantum-states-main/
 │   ├── collect_accuracy_results.py      # Results aggregation
 │   └── collect_accuracy_results_bd.py
 │
-├── LUPI & Kernel Methods
-│   ├── SVMplus.py                       # SVM+ implementation
+├── Heisenberg Model (LUPI & Transformers)
 │   ├── heisenberg_kernel_comparison.py  # Kernel methods comparison
 │   ├── heisenberg_train_transformer.py
 │   ├── heisenberg_sample_transformer.py
@@ -106,15 +145,37 @@ generative-quantum-states-main/
 
 ### Key Files by Function
 
-#### LUPI (SVM+) Experiments
+#### LUPI (SVM+) Experiments - `rydberg_lupi/` folder
+All LUPI-related code and results are organized in the `rydberg_lupi/` directory:
+
+**Notebooks:**
 - **Rydberg_data.ipynb**: Data loading and preprocessing for quantum phase detection
-- **SVMplus_Rydberg.ipynb**: Complete SVM+ algorithm with demonstrations:
-  - `SVMPlus` class: Binary LUPI classifier
-  - `MulticlassSVMPlus` class: Multiclass extension (One-vs-One)
-  - Synthetic benchmarks (noisy moons dataset)
-  - Quantum phase classification (Disordered/Z2/Z3)
+  - Loads Rydberg atom quantum measurement data
+  - Extracts regular features (system parameters) and privileged features (order parameters)
+  - Prepares train/test splits for LUPI experiments
+  
+- **SVMplus_Rydberg.ipynb**: Complete SVM+ algorithm with demonstrations
+  - `SVMPlus` class: Binary LUPI classifier with dual optimization
+  - `MulticlassSVMPlus` class: Multiclass extension (One-vs-One strategy)
+  - Synthetic benchmarks: Noisy moons dataset showing ~10% improvement
+  - Quantum phase classification: Disordered/Z2/Z3 phases
+  
 - **SVM__Rydberg.ipynb**: Standard SVM baseline for comparison
-- **SVMplus.py**: Standalone SVM+ implementation module
+  - Establishes baseline performance without privileged information
+  - Fair comparison with same data splits and parameters
+  
+- **SVM+_Rydberg.ipynb**, **SVMs.ipynb**: Additional SVM experiments and variations
+
+**Python Modules:**
+- **SVMplus.py**: Standalone SVM+ implementation (can be imported)
+- **SVMdeltatplus.py**: Delta variant of SVM+ algorithm
+- **constants.py**: Shared configuration parameters
+
+**Results:** 
+Experimental results stored as pickle files with various configurations:
+- `exp_res_*.pkl`: Standard uniform sampling results (3 runs)
+- `exp_res_bd*.pkl`: Boundary sampling results (3 runs)
+- `exp_res_big*.pkl`: Large-scale experiments (3 runs each for uniform and boundary)
 
 #### Transformer Experiments
 - **Tutorial-Rydberg-1D_*.py**: Scripts for training transformer models on Rydberg systems
@@ -123,7 +184,6 @@ generative-quantum-states-main/
 
 #### Analysis & Utilities
 - **heisenberg_*.py**: Scripts for 2D Heisenberg model experiments
-- **constants.py**: Shared constants and configurations
 - **collect_accuracy_results*.py**: Aggregate results from multiple runs
 
 ## Requirements
@@ -167,11 +227,11 @@ module load PyTorch/2.1.2-foss-2023a-CUDA-12.1.1
 
 #### LUPI (SVM+) Tutorials
 
-Start with the LUPI notebooks to understand quantum-enhanced classical learning:
+Start with the LUPI notebooks in the `rydberg_lupi/` folder to understand quantum-enhanced classical learning:
 
 **Step 1: Data Preparation**
 ```bash
-jupyter notebook Rydberg_data.ipynb
+jupyter notebook rydberg_lupi/Rydberg_data.ipynb
 ```
 - Loads Rydberg atom quantum measurement data
 - Extracts regular and privileged features
@@ -179,7 +239,7 @@ jupyter notebook Rydberg_data.ipynb
 
 **Step 2: SVM+ Implementation and Experiments**
 ```bash
-jupyter notebook SVMplus_Rydberg.ipynb
+jupyter notebook rydberg_lupi/SVMplus_Rydberg.ipynb
 ```
 - Complete SVM+ algorithm implementation
 - Synthetic benchmark (noisy moons) demonstration
@@ -188,11 +248,20 @@ jupyter notebook SVMplus_Rydberg.ipynb
 
 **Step 3: Baseline Comparison**
 ```bash
-jupyter notebook SVM__Rydberg.ipynb
+jupyter notebook rydberg_lupi/SVM__Rydberg.ipynb
 ```
 - Standard SVM baseline results
 - Direct comparison with SVM+ performance
 - Demonstrates quantum advantage quantitatively
+
+**Additional Notebooks:**
+```bash
+# Alternative SVM+ experiments
+jupyter notebook rydberg_lupi/SVM+_Rydberg.ipynb
+
+# Multiple SVM comparisons
+jupyter notebook rydberg_lupi/SVMs.ipynb
+```
 
 #### Transformer Tutorials
 
